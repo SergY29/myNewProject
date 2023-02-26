@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
 import {
-    ImageBackground, StyleSheet, Text, TextInput, Button, Alert, View, KeyboardAvoidingView,
+    ImageBackground, StyleSheet, Text, TextInput, View, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native';
 
