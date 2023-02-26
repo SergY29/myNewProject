@@ -2,20 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
 import {
     ImageBackground, StyleSheet, Text, TextInput, Button, Alert, View, KeyboardAvoidingView,
-    Platform, TouchableWithoutFeedback, Keyboard,
+    Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native';
 
 export default function RegistrationScreen() {
     const [name, setName] = useState("");
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
-    const [secureTextEntry, setsecureTextEntry] = useState(true);
 
     const nameHandler = (text) => setName(text);
     const mailHandler = (text) => setMail(text);
     const passwordHandler = (text) => setPassword(text);
 
-    const onLogin = () => {
+    const onPress = () => {
         console.log(`Name: ${name} Email: ${mail} Password: ${password}`);
         setName("");
         setMail("");
@@ -47,10 +46,12 @@ export default function RegistrationScreen() {
                                     value={password}
                                     onChangeText={passwordHandler}
                                     placeholder="Пароль"
-                                    secureTextEntry={secureTextEntry}
+                                    secureTextEntry={true}
                                     style={styles.input}
                                 />
-                                <Button title={"Login"} style={styles.input} onPress={onLogin} />
+                                <TouchableOpacity style={styles.button} onPress={onPress}>
+                                    <Text>Зарегистрироваться</Text>
+                                </TouchableOpacity>
                             </KeyboardAvoidingView>
                         </View>
                     </View>
@@ -95,8 +96,16 @@ const styles = StyleSheet.create({
         height: 44,
         padding: 10,
         borderWidth: 1,
-        borderColor: "black",
+        borderRadius: 8,
+        borderColor: "#E8E8E8",
         marginBottom: 10,
 
     },
+    button: {
+        backgroundColor: '#FF6C00',
+        alignItems: 'center',
+        borderRadius: 10,
+        paddingBottom: 16,
+        paddingTop: 16,
+    }
 });
