@@ -50,10 +50,11 @@ export default function RegistrationScreen() {
                                     style={styles.input}
                                 />
                                 <TouchableOpacity style={styles.button} onPress={onPress}>
-                                    <Text>Зарегистрироваться</Text>
+                                    <Text style={styles.textButton}>Зарегистрироваться</Text>
                                 </TouchableOpacity>
                             </KeyboardAvoidingView>
                         </View>
+                        <Text style={styles.textRegister}>Уже есть аккаунт? Войти</Text>
                     </View>
                 </ImageBackground>
             </View>
@@ -84,28 +85,37 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         alignItems: 'center',
-
     },
     form: {
         width: "100%",
-        paddingLeft: 16,
-        paddingRight: 16,
-
+        paddingHorizontal: 16,
     },
     input: {
-        height: 44,
-        padding: 10,
+        height: 50,
+        paddingTop: 16,
+        paddingBottom: 15,
+        paddingLeft: 16,
         borderWidth: 1,
         borderRadius: 8,
         borderColor: "#E8E8E8",
-        marginBottom: 10,
+        marginBottom: 16,
+        color: '#BDBDBD',
 
     },
     button: {
         backgroundColor: '#FF6C00',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: 100,
+        padding: 0,
+        marginTop: 27
+
+    },
+    textButton: {
+        color: '#fff',
         paddingBottom: 16,
+        paddingTop: 16,
+    },
+    textRegister: {
         paddingTop: 16,
     }
 });
