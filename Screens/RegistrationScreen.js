@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from "react";
+import { useState } from 'react';
 import {
     ImageBackground, StyleSheet, Text, TextInput, View, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
@@ -18,6 +18,7 @@ export default function RegistrationScreen() {
         console.log(state);
         setState(initialState)
     };
+
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     title: {
+        fontFamily: 'Roboto-Medium',
         fontSize: 30,
         marginTop: 92,
         marginBottom: 33,
@@ -111,6 +113,7 @@ const styles = StyleSheet.create({
         paddingTop: 16,
     },
     textRegister: {
+
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 16,
