@@ -13,6 +13,7 @@ const initialState = {
 
 export default function RegistrationScreen() {
     const [state, setState] = useState(initialState);
+    const [showMeaning, setShowMeaning] = useState(true);
 
     const onSubmit = () => {
         console.log(state);
@@ -24,8 +25,6 @@ export default function RegistrationScreen() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/photo_bg.jpg')} style={styles.image}>
-                    <StatusBar style="auto" />
-
                     <View style={styles.regContainer}>
                         <Text style={styles.title}>Регистрация</Text>
                         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
@@ -42,13 +41,18 @@ export default function RegistrationScreen() {
                                     placeholder="Адрес электронной почты"
                                     style={styles.input}
                                 />
-                                <TextInput
-                                    value={state.password}
-                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
-                                    placeholder="Пароль"
-                                    secureTextEntry={true}
-                                    style={styles.input}
-                                />
+                                <View style={styles.showBtnContaener}>
+                                    <TextInput
+                                        value={state.password}
+                                        onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
+                                        placeholder="Пароль"
+                                        secureTextEntry={showMeaning ? true : false}
+                                        style={styles.input}
+                                    />
+                                    <TouchableOpacity style={styles.showBtn} activeOpacity={0.8} onPress={() => setShowMeaning(!showMeaning)}>
+                                        <Text style={styles.showText}>{showMeaning ? "Показать" : "Скрыть"}</Text>
+                                    </TouchableOpacity>
+                                </View>
                                 <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
                                     <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                                 </TouchableOpacity>
@@ -65,7 +69,6 @@ export default function RegistrationScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00FFCC',
     },
     image: {
         flex: 1,
@@ -75,6 +78,8 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: 'Roboto-Medium',
         fontSize: 30,
+        lineHeight: 35,
+
         marginTop: 92,
         marginBottom: 33,
         marginLeft: 'auto',
@@ -90,6 +95,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     input: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+
         height: 50,
         paddingTop: 16,
         paddingBottom: 15,
@@ -98,7 +107,25 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderColor: "#E8E8E8",
         marginBottom: 16,
+
+        backgroundColor: '#F6F6F6',
         color: '#BDBDBD',
+
+    },
+    showBtnContaener: {
+        position: "relative",
+    },
+    showBtn: {
+        position: "absolute",
+        right: 16,
+        top: 16,
+    },
+    showText: {
+        fontFamily: "Roboto-Regular",
+        fontSize: 14,
+        lineHeight: 19,
+
+        color: "#1B4371",
     },
     button: {
         backgroundColor: '#FF6C00',
@@ -106,17 +133,25 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         padding: 0,
         marginTop: 27,
+
     },
     btnTitle: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+
         color: '#fff',
         paddingBottom: 16,
         paddingTop: 16,
     },
     textRegister: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
 
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 16,
-
+        color: '#1B4371',
     }
 });

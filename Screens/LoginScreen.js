@@ -22,7 +22,6 @@ export default function LoginScreen() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/photo_bg.jpg')} style={styles.image}>
-                    <StatusBar style="auto" />
                     <View style={styles.regContainer}>
                         <Text style={styles.title}>Вход</Text>
                         <View style={styles.form}>
