@@ -1,47 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from "react";
+import { useState } from 'react';
 import {
-    ImageBackground, StyleSheet, Text, TextInput, Button, Alert, View, KeyboardAvoidingView,
-    Platform, TouchableWithoutFeedback, Keyboard,
+    ImageBackground, StyleSheet, Text, TextInput, View, KeyboardAvoidingView,
+    Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native';
 
+const initialState = {
+    login: '',
+    password: '',
+}
+
 export default function LoginScreen() {
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
+    const [state, setState] = useState(initialState);
+    const [showMeaning, setShowMeaning] = useState(true);
 
-    const nameHandler = (text) => setName(text);
-    const passwordHandler = (text) => setPassword(text);
-
-    const onLogin = () => {
-        console.log(`Name: ${name} Password: ${password}`);
-        setName("");
-        setPassword("");
+    const onSubmit = () => {
+        console.log(state);
+        setState(initialState)
     };
+
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/photo_bg.jpg')} style={styles.image}>
                     <View style={styles.regContainer}>
-                        <Text style={styles.title}>Вход</Text>
-                        <View style={styles.form}>
-                            <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                        <Text style={styles.title}>Войти</Text>
+                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                            <View style={styles.form}>
                                 <TextInput
-                                    value={name}
-                                    onChangeText={nameHandler}
+                                    value={state.login}
+                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
                                     placeholder="Логин"
                                     style={styles.input}
                                 />
-                                <TextInput
-                                    value={password}
-                                    onChangeText={passwordHandler}
-                                    placeholder="Пароль"
-                                    secureTextEntry={true}
-                                    style={styles.input}
-                                />
-                                <Button title={"Login"} style={styles.input} onPress={onLogin} />
-                            </KeyboardAvoidingView>
-                        </View>
+                                <View style={styles.showBtnContaener}>
+                                    <TextInput
+                                        value={state.password}
+                                        onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
+                                        placeholder="Пароль"
+                                        secureTextEntry={showMeaning ? true : false}
+                                        style={styles.input}
+                                    />
+                                    <TouchableOpacity style={styles.showBtn} activeOpacity={0.8} onPress={() => setShowMeaning(!showMeaning)}>
+                                        <Text style={styles.showText}>{showMeaning ? "Показать" : "Скрыть"}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
+                                    <Text style={styles.btnTitle}>Войти</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </KeyboardAvoidingView>
+                        <Text style={styles.textRegister}>Нет аккаунта? Зарегистрироваться</Text>
                     </View>
                 </ImageBackground>
             </View>
@@ -52,40 +61,89 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00FFCC',
-
     },
     image: {
         flex: 1,
         resizeMode: 'cover',
         justifyContent: 'flex-end',
-
     },
     title: {
+        fontFamily: 'Roboto-Medium',
         fontSize: 30,
-        marginTop: 92,
+        lineHeight: 35,
+
+        marginTop: 32,
         marginBottom: 33,
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     regContainer: {
-        flex: 0.7,
+        flex: 0.6,
         backgroundColor: '#fff',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        alignItems: 'center',
-
     },
     form: {
-        width: "100%",
-        paddingLeft: 16,
-        paddingRight: 16,
-
+        marginHorizontal: 16,
     },
     input: {
-        height: 44,
-        padding: 10,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+
+        height: 50,
+        paddingTop: 16,
+        paddingBottom: 15,
+        paddingLeft: 16,
         borderWidth: 1,
-        borderColor: "black",
-        marginBottom: 10,
+        borderRadius: 8,
+        borderColor: "#E8E8E8",
+        marginBottom: 16,
+
+        backgroundColor: '#F6F6F6',
+        color: '#BDBDBD',
 
     },
+    showBtnContaener: {
+        position: "relative",
+    },
+    showBtn: {
+        position: "absolute",
+        right: 16,
+        top: 16,
+    },
+    showText: {
+        fontFamily: "Roboto-Regular",
+        fontSize: 14,
+        lineHeight: 19,
+
+        color: "#1B4371",
+    },
+    button: {
+        backgroundColor: '#FF6C00',
+        alignItems: 'center',
+        borderRadius: 100,
+        padding: 0,
+        marginTop: 27,
+
+    },
+    btnTitle: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+
+        color: '#fff',
+        paddingBottom: 16,
+        paddingTop: 16,
+    },
+    textRegister: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        paddingTop: 16,
+        color: '#1B4371',
+    }
 });
