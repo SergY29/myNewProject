@@ -5,20 +5,18 @@ import {
     Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native';
 
+const initialState = {
+    login: '',
+    email: '',
+    password: '',
+}
+
 export default function RegistrationScreen() {
-    const [name, setName] = useState("");
-    const [mail, setMail] = useState("");
-    const [password, setPassword] = useState("");
+    const [state, setState] = useState(initialState);
 
-    const nameHandler = (text) => setName(text);
-    const mailHandler = (text) => setMail(text);
-    const passwordHandler = (text) => setPassword(text);
-
-    const onPress = () => {
-        console.log(`Name: ${name} Email: ${mail} Password: ${password}`);
-        setName("");
-        setMail("");
-        setPassword("");
+    const onSubmit = () => {
+        console.log(state);
+        setState(initialState)
     };
 
     return (
@@ -26,30 +24,31 @@ export default function RegistrationScreen() {
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/photo_bg.jpg')} style={styles.image}>
                     <StatusBar style="auto" />
+
                     <View style={styles.regContainer}>
                         <Text style={styles.title}>Регистрация</Text>
                         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
                             <View style={styles.form}>
                                 <TextInput
-                                    value={name}
-                                    onChangeText={nameHandler}
+                                    value={state.login}
+                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
                                     placeholder="Логин"
                                     style={styles.input}
                                 />
                                 <TextInput
-                                    value={mail}
-                                    onChangeText={mailHandler}
+                                    value={state.email}
+                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
                                     placeholder="Адрес электронной почты"
                                     style={styles.input}
                                 />
                                 <TextInput
-                                    value={password}
-                                    onChangeText={passwordHandler}
+                                    value={state.password}
+                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
                                     placeholder="Пароль"
                                     secureTextEntry={true}
                                     style={styles.input}
                                 />
-                                <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onPress}>
+                                <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
                                     <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                                 </TouchableOpacity>
                             </View>
