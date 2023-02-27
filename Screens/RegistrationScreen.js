@@ -28,8 +28,8 @@ export default function RegistrationScreen() {
                     <StatusBar style="auto" />
                     <View style={styles.regContainer}>
                         <Text style={styles.title}>Регистрация</Text>
-                        <View style={styles.form}>
-                            <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                            <View style={styles.form}>
                                 <TextInput
                                     value={name}
                                     onChangeText={nameHandler}
@@ -49,11 +49,11 @@ export default function RegistrationScreen() {
                                     secureTextEntry={true}
                                     style={styles.input}
                                 />
-                                <TouchableOpacity style={styles.button} onPress={onPress}>
-                                    <Text style={styles.textButton}>Зарегистрироваться</Text>
+                                <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onPress}>
+                                    <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                                 </TouchableOpacity>
-                            </KeyboardAvoidingView>
-                        </View>
+                            </View>
+                        </KeyboardAvoidingView>
                         <Text style={styles.textRegister}>Уже есть аккаунт? Войти</Text>
                     </View>
                 </ImageBackground>
@@ -66,29 +66,27 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#00FFCC',
-
     },
     image: {
         flex: 1,
         resizeMode: 'cover',
         justifyContent: 'flex-end',
-
     },
     title: {
         fontSize: 30,
         marginTop: 92,
         marginBottom: 33,
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     regContainer: {
         flex: 0.7,
         backgroundColor: '#fff',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        alignItems: 'center',
     },
     form: {
-        width: "100%",
-        paddingHorizontal: 16,
+        marginHorizontal: 16,
     },
     input: {
         height: 50,
@@ -100,22 +98,23 @@ const styles = StyleSheet.create({
         borderColor: "#E8E8E8",
         marginBottom: 16,
         color: '#BDBDBD',
-
     },
     button: {
         backgroundColor: '#FF6C00',
         alignItems: 'center',
         borderRadius: 100,
         padding: 0,
-        marginTop: 27
-
+        marginTop: 27,
     },
-    textButton: {
+    btnTitle: {
         color: '#fff',
         paddingBottom: 16,
         paddingTop: 16,
     },
     textRegister: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
         paddingTop: 16,
+
     }
 });
