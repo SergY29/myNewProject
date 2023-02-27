@@ -11,27 +11,35 @@ const initialState = {
 
 export default function LoginScreen() {
     const [state, setState] = useState(initialState);
+    const [isShowKey, setIsShowKey] = useState(false);
     const [showMeaning, setShowMeaning] = useState(true);
 
     const onSubmit = () => {
+        setIsShowKey(false);
         console.log(state);
+        Keyboard.dismiss();
         setState(initialState)
     };
 
+    const onPushWithoutInput = () => {
+        Keyboard.dismiss();
+        setIsShowKey(false);
+    }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={onPushWithoutInput}>
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/photo_bg.jpg')} style={styles.image}>
                     <View style={styles.regContainer}>
                         <Text style={styles.title}>Войти</Text>
                         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
-                            <View style={styles.form}>
+                            <View style={{ ...styles.form, paddingBottom: isShowKey ? 32 : 144 }}>
                                 <TextInput
                                     value={state.login}
                                     onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
                                     placeholder="Логин"
                                     style={styles.input}
+                                    onFocus={() => setIsShowKey(true)}
                                 />
                                 <View style={styles.showBtnContaener}>
                                     <TextInput
@@ -40,17 +48,19 @@ export default function LoginScreen() {
                                         placeholder="Пароль"
                                         secureTextEntry={showMeaning ? true : false}
                                         style={styles.input}
+                                        onFocus={() => setIsShowKey(true)}
                                     />
                                     <TouchableOpacity style={styles.showBtn} activeOpacity={0.8} onPress={() => setShowMeaning(!showMeaning)}>
                                         <Text style={styles.showText}>{showMeaning ? "Показать" : "Скрыть"}</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
-                                    <Text style={styles.btnTitle}>Войти</Text>
+                                    <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                                 </TouchableOpacity>
+                                <Text style={styles.textRegister}>Уже есть аккаунт? Войти</Text>
                             </View>
                         </KeyboardAvoidingView>
-                        <Text style={styles.textRegister}>Нет аккаунта? Зарегистрироваться</Text>
+
                     </View>
                 </ImageBackground>
             </View>
@@ -78,7 +88,6 @@ const styles = StyleSheet.create({
         marginRight: 'auto',
     },
     regContainer: {
-        flex: 0.6,
         backgroundColor: '#fff',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
