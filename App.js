@@ -27,12 +27,29 @@ export default function App() {
 
 
   return (
+    // <View style={styles.container} >
     <>
       <LoginScreen onLayout={onLayoutRootView} />
-      {/* <RegistrationScreen onLayout={onLayoutRootView} /> */}
-      <StatusBar style="auto" />
+
     </>
   );
 }
+
+// <RegistrationScreen onLayout={onLayoutRootView} />
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+
+//   },
+// });
+
+{/* <RegistrationScreen onLayout={onLayoutRootView} /> */ }
+{/* <StatusBar style="auto" />
+    </View> */}
+
+
+
 
 
