@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -27,10 +28,11 @@ export default function App() {
 
   return (
     <>
-      {/* <LoginScreen onLayout={onLayoutRootView} /> */}
-      <RegistrationScreen onLayout={onLayoutRootView} />
+      <LoginScreen onLayout={onLayoutRootView} />
+      {/* <RegistrationScreen onLayout={onLayoutRootView} /> */}
       <StatusBar style="auto" />
     </>
   );
 }
+
 
