@@ -56,9 +56,10 @@ export default function LoginScreen({ navigation }) {
                             <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
                                 <Text style={styles.btnTitle}>Войти</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('Registration')}>
-                                <Text style={styles.textRegister}>Нет аккаунта? Зарегистрироваться</Text>
-                            </TouchableOpacity>
+                            <View style={styles.textContainer}>
+                                <Text onPress={() => navigation.navigate('Registration')} style={styles.textRegister}>
+                                    Нет аккаунта? Зарегистрироваться</Text>
+                            </View>
                         </View>
                     </KeyboardAvoidingView>
 
@@ -142,14 +143,15 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         paddingTop: 16,
     },
+    textContainer: {
+        marginTop: 16,
+    },
     textRegister: {
         fontFamily: 'Roboto-Regular',
         fontSize: 16,
         lineHeight: 19,
-
         marginLeft: 'auto',
         marginRight: 'auto',
-        paddingTop: 16,
         color: '#1B4371',
     }
 });
