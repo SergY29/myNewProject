@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { View } from 'react-native';
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -11,12 +10,7 @@ import LoginScreen from './Screens/auth/LoginScreen';
 import RegistrationScreen from './Screens/auth/RegistrationScreen';
 
 
-SplashScreen.preventAutoHideAsync();
-
 const AuthStack = createStackNavigator();
-
-
-
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -34,23 +28,19 @@ export default function App() {
     return null;
   }
 
-
   return (
-    <NavigationContainer onLayout={onLayoutRootView}>
-      <AuthStack.Navigator>
-        {/* <AuthStack.Screen name="Login" component={LoginScreen} /> */}
-        <AuthStack.Screen name="Registration" component={RegistrationScreen} />
-      </AuthStack.Navigator>
-    </NavigationContainer>
-
-
-
-
+    <>
+      <StatusBar style="auto" />
+      <NavigationContainer onLayout={onLayoutRootView}>
+        <AuthStack.Navigator>
+          <AuthStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+          <AuthStack.Screen options={{ headerShown: false }} name="Registration" component={RegistrationScreen} />
+        </AuthStack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
-
-    // <View View  >
 
 
 

@@ -9,7 +9,7 @@ const initialState = {
     password: '',
 }
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
     const [state, setState] = useState(initialState);
     const [isShowKey, setIsShowKey] = useState(false);
     const [showMeaning, setShowMeaning] = useState(true);
@@ -54,9 +54,11 @@ export default function LoginScreen() {
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
-                                <Text style={styles.btnTitle}>Зарегистрироваться</Text>
+                                <Text style={styles.btnTitle}>Войти</Text>
                             </TouchableOpacity>
-                            <Text style={styles.textRegister}>Уже есть аккаунт? Войти</Text>
+                            <TouchableOpacity activeOpacity={0.4} onPress={() => navigation.navigate('Registration')}>
+                                <Text style={styles.textRegister}>Нет аккаунта? Зарегистрироваться</Text>
+                            </TouchableOpacity>
                         </View>
                     </KeyboardAvoidingView>
 
