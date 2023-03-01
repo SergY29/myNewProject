@@ -28,45 +28,51 @@ export default function LoginScreen() {
 
     return (
         <TouchableWithoutFeedback onPress={onPushWithoutInput}>
-            <ImageBackground source={require('../../assets/images/photo_bg.jpg')} style={styles.image}>
-                <View style={styles.regContainer}>
-                    <Text style={styles.title}>Войти</Text>
-                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
-                        <View style={{ ...styles.form, paddingBottom: isShowKey ? 32 : 144 }}>
-                            <TextInput
-                                value={state.login}
-                                onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
-                                placeholder="Логин"
-                                style={styles.input}
-                                onFocus={() => setIsShowKey(true)}
-                            />
-                            <View style={styles.showBtnContaener}>
+            <View style={styles.container}>
+                <ImageBackground source={require('../../assets/images/photo_bg.jpg')} style={styles.image}>
+                    <View style={styles.regContainer}>
+                        <Text style={styles.title}>Войти</Text>
+                        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                            <View style={{ ...styles.form, paddingBottom: isShowKey ? 32 : 144 }}>
                                 <TextInput
-                                    value={state.password}
-                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
-                                    placeholder="Пароль"
-                                    secureTextEntry={showMeaning ? true : false}
+                                    value={state.login}
+                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
+                                    placeholder="Логин"
                                     style={styles.input}
                                     onFocus={() => setIsShowKey(true)}
                                 />
-                                <TouchableOpacity style={styles.showBtn} activeOpacity={0.8} onPress={() => setShowMeaning(!showMeaning)}>
-                                    <Text style={styles.showText}>{showMeaning ? "Показать" : "Скрыть"}</Text>
+                                <View style={styles.showBtnContaener}>
+                                    <TextInput
+                                        value={state.password}
+                                        onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
+                                        placeholder="Пароль"
+                                        secureTextEntry={showMeaning ? true : false}
+                                        style={styles.input}
+                                        onFocus={() => setIsShowKey(true)}
+                                    />
+                                    <TouchableOpacity style={styles.showBtn} activeOpacity={0.8} onPress={() => setShowMeaning(!showMeaning)}>
+                                        <Text style={styles.showText}>{showMeaning ? "Показать" : "Скрыть"}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
+                                    <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                                 </TouchableOpacity>
+                                <Text style={styles.textRegister}>Уже есть аккаунт? Войти</Text>
                             </View>
-                            <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
-                                <Text style={styles.btnTitle}>Зарегистрироваться</Text>
-                            </TouchableOpacity>
-                            <Text style={styles.textRegister}>Уже есть аккаунт? Войти</Text>
-                        </View>
-                    </KeyboardAvoidingView>
+                        </KeyboardAvoidingView>
 
-                </View>
-            </ImageBackground>
+                    </View>
+                </ImageBackground>
+            </View>
         </TouchableWithoutFeedback>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
     image: {
         flex: 1,
         resizeMode: 'cover',
