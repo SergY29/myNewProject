@@ -65,10 +65,9 @@ export default function RegistrationScreen({ navigation }) {
                             <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
                                 <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                             </TouchableOpacity>
-                            <View style={styles.textContainer}>
-                                <Text onPress={() => navigation.navigate('Login')} style={styles.textRegister}>
-                                    Уже есть аккаунт? Войти
-                                </Text>
+                            <View style={styles.textContainer} >
+                                <Text style={styles.textRegister}>Уже есть аккаунт?
+                                    <Text onPress={() => navigation.navigate('Login')}> Войти</Text></Text>
                             </View>
                         </View>
                     </KeyboardAvoidingView>
