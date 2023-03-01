@@ -6,8 +6,10 @@ import * as SplashScreen from 'expo-splash-screen';
 
 SplashScreen.preventAutoHideAsync();
 
-import LoginScreen from './Screens/LoginScreen';
-import RegistrationScreen from './Screens/RegistrationScreen';
+import LoginScreen from './Screens/auth/LoginScreen';
+import RegistrationScreen from './Screens/auth/RegistrationScreen';
+
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,18 +29,11 @@ export default function App() {
 
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <LoginScreen />
-      {/* <RegistrationScreen /> */}
+    <>
+      <LoginScreen onLayout={onLayoutRootView} />
+      {/* <RegistrationScreen onLayout={onLayoutRootView} /> */}
       <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-
-  },
-});

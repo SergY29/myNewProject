@@ -6,10 +6,11 @@ import {
 
 const initialState = {
     login: '',
+    email: '',
     password: '',
 }
 
-export default function LoginScreen() {
+export default function RegistrationScreen() {
     const [state, setState] = useState(initialState);
     const [isShowKey, setIsShowKey] = useState(false);
     const [showMeaning, setShowMeaning] = useState(true);
@@ -24,20 +25,28 @@ export default function LoginScreen() {
     const onPushWithoutInput = () => {
         Keyboard.dismiss();
         setIsShowKey(false);
+
     }
 
     return (
         <TouchableWithoutFeedback onPress={onPushWithoutInput}>
             <View style={styles.container}>
-                <ImageBackground source={require('../assets/images/photo_bg.jpg')} style={styles.image}>
+                <ImageBackground source={require('../../assets/images/photo_bg.jpg')} style={styles.image}>
                     <View style={styles.regContainer}>
-                        <Text style={styles.title}>Войти</Text>
+                        <Text style={styles.title}>Регистрация</Text>
                         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
-                            <View style={{ ...styles.form, paddingBottom: isShowKey ? 32 : 144 }}>
+                            <View style={{ ...styles.form, paddingBottom: isShowKey ? 32 : 79 }}>
                                 <TextInput
                                     value={state.login}
                                     onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
                                     placeholder="Логин"
+                                    style={styles.input}
+                                    onFocus={() => setIsShowKey(true)}
+                                />
+                                <TextInput
+                                    value={state.email}
+                                    onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
+                                    placeholder="Адрес электронной почты"
                                     style={styles.input}
                                     onFocus={() => setIsShowKey(true)}
                                 />
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         lineHeight: 35,
 
-        marginTop: 32,
+        marginTop: 92,
         marginBottom: 33,
         marginLeft: 'auto',
         marginRight: 'auto',
