@@ -27,7 +27,6 @@ export default function App() {
 
 
   return (
-    // <View style={styles.container} >
     <>
       <LoginScreen onLayout={onLayoutRootView} />
 
@@ -37,13 +36,13 @@ export default function App() {
 
 // <RegistrationScreen onLayout={onLayoutRootView} />
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
 
-//   },
-// });
+  },
+});
 
 {/* <RegistrationScreen onLayout={onLayoutRootView} /> */ }
 {/* <StatusBar style="auto" />
