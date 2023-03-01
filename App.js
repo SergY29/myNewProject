@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 import LoginScreen from './Screens/auth/LoginScreen';
 import RegistrationScreen from './Screens/auth/RegistrationScreen';
@@ -27,11 +27,11 @@ export default function App() {
 
 
   return (
-    < >
-      <LoginScreen onLayout={onLayoutRootView} />
+    <>
+      <LoginScreen />
       {/* <RegistrationScreen /> */}
       <StatusBar style="auto" />
-    </ >
+    </>
   );
 }
 
