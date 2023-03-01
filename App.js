@@ -30,8 +30,8 @@ export default function App() {
 
   return (
     <>
-      <LoginScreen onLayout={onLayoutRootView} />
-      {/* <RegistrationScreen onLayout={onLayoutRootView} /> */}
+      {/* <LoginScreen onLayout={onLayoutRootView} /> */}
+      <RegistrationScreen onLayout={onLayoutRootView} />
       <StatusBar style="auto" />
     </>
   );
