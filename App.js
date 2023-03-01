@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -29,19 +29,14 @@ export default function App() {
   return (
     < >
       <LoginScreen onLayout={onLayoutRootView} />
+      {/* <RegistrationScreen /> */}
       <StatusBar style="auto" />
-    </>
+    </ >
   );
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-
-  },
-});
+// View style = {{ flex: 1 }} onLayout = { onLayoutRootView }
 
 
 
