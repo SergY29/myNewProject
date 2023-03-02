@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,6 +12,7 @@ import RegistrationScreen from './Screens/auth/RegistrationScreen';
 
 
 const AuthStack = createStackNavigator();
+const BottomTab = createBottomTabNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
