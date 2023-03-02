@@ -1,24 +1,19 @@
 import { useCallback } from 'react';
-
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import LoginScreen from './Screens/auth/LoginScreen';
-import RegistrationScreen from './Screens/auth/RegistrationScreen';
+import { useRoute } from './router';
 
-
-const AuthStack = createStackNavigator();
-const BottomTab = createBottomTabNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   });
+
+  const routing = useRoute(false);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -34,15 +29,11 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <NavigationContainer onLayout={onLayoutRootView}>
-        <AuthStack.Navigator>
-          <AuthStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-          <AuthStack.Screen options={{ headerShown: false }} name="Registration" component={RegistrationScreen} />
-        </AuthStack.Navigator>
+        {routing}
       </NavigationContainer>
     </>
   );
 }
-
 
 
 
