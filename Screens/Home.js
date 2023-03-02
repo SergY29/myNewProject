@@ -13,7 +13,7 @@ import ProfileScreen from './mainScreen/ProfileScreen';
 const MainTab = createBottomTabNavigator();
 
 
-export default function Home({ navigation }) {
+export default function Home() {
 
     return (
         <MainTab.Navigator initialRouteName="Posts" screenOptions={{ tabBarShowLabel: false, tabBarActiveBackgroundColor: "#FF6C00", tabBarItemStyle: { borderRadius: 30 }, width: 300 }}>
