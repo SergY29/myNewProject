@@ -13,7 +13,7 @@ export default function App() {
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   });
 
-  const routing = useRoute(false);
+  const routing = useRoute(true);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -34,10 +34,3 @@ export default function App() {
     </>
   );
 }
-
-
-
-
-
-
-
