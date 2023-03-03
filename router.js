@@ -9,12 +9,9 @@ const AuthStack = createStackNavigator();
 export const useRoute = (isAuth) => {
     return (
         < AuthStack.Navigator >
-            {!isAuth &&
-                <>
-                    <AuthStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-                    <AuthStack.Screen options={{ headerShown: false }} name="Registration" component={RegistrationScreen} />
-                </>}
-            {isAuth && <AuthStack.Screen options={{ headerShown: false }} name="Home" component={Home} />}
+            <AuthStack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+            <AuthStack.Screen options={{ headerShown: false }} name="Registration" component={RegistrationScreen} />
+            <AuthStack.Screen options={{ headerShown: false }} name="Home" component={Home} />
         </AuthStack.Navigator>
     )
 }

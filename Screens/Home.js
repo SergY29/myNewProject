@@ -13,13 +13,13 @@ import ProfileScreen from './mainScreen/ProfileScreen';
 const MainTab = createBottomTabNavigator();
 
 
-export default function Home() {
+export default function Home({ navigation }) {
 
     return (
         <MainTab.Navigator initialRouteName="Posts" screenOptions={{ tabBarShowLabel: false, tabBarActiveBackgroundColor: "#FF6C00", tabBarItemStyle: { borderRadius: 30 }, width: 300 }}>
             <MainTab.Screen options={{
                 headerRight: () => (
-                    <TouchableOpacity style={{ marginRight: 20 }} >
+                    <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Login')} >
                         <Feather name="log-out" size={24} color="#BDBDBD" />
                     </TouchableOpacity>
                 ),
