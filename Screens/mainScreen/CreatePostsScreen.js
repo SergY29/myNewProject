@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export default function CreatePostsScreen({ navigation }) {
-    const [buttonDisabled, setbuttonDisabled] = useState(true);
+
     const [camera, setCamera] = useState(null);
     const [picture, setPicture] = useState(null)
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -20,13 +20,12 @@ export default function CreatePostsScreen({ navigation }) {
 
     useEffect(() => {
         (async () => {
+
             const { status } = await Camera.requestCameraPermissionsAsync();
             setHasPermission(status === "granted");
         })();
 
-        if (picture) {
-            setbuttonDisabled(false)
-        }
+
     }, [picture]);
 
     if (hasPermission === null) {
@@ -42,13 +41,15 @@ export default function CreatePostsScreen({ navigation }) {
     const takePhoto = async () => {
         const { uri } = await camera.takePictureAsync()
         setPicture(uri);
-        setbuttonDisabled(true);
         console.log("photo", uri)
     }
 
-    const sendPhoto = () => {
-        navigation.navigate('Posts', { picture });
-        setbuttonDisabled(false);
+    const sendPhoto = async () => {
+        try {
+            navigation.navigate('Posts', { picture });
+            setPicture(null);
+        } catch (error) {
+        }
     }
 
     const setTypeCamera = () => {
@@ -59,22 +60,26 @@ export default function CreatePostsScreen({ navigation }) {
         )
     }
 
-    console.log(picture);
     return (
         <View style={styles.container}>
-            <Camera style={styles.camera} type={type} ref={setCamera}>
-                {picture && (<View style={styles.takePhotoContainer}>
-                    <Image sourse={{ uri: picture }} style={{ height: "100%", width: "100%" }} />
-                </View>)}
-                <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
-                    <AntDesign name="camerao" size={35} color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.flip} onPress={setTypeCamera}>
-                    <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
-                </TouchableOpacity>
-            </Camera>
+            {!picture ?
+                <Camera style={styles.camera} type={type} ref={setCamera}>
+                    <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
+                        <AntDesign name="camerao" size={35} color="white" />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.flip} onPress={setTypeCamera}>
+                        <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
+                    </TouchableOpacity>
+                </Camera>
+                :
+
+                <Image sourse={{ uri: picture }} style={{
+                    height: 230, width: "100%", borderColor: '#fafa', borderWidth: 5,
+                }} />
+
+            }
             <View style={styles.form} >
-                <TouchableOpacity disabled={buttonDisabled} activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
+                <TouchableOpacity activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
                     <Text style={{ ...styles.title, color: picture ? '#fff' : '#BDBDBD' }}>Опубликовать</Text>
                 </TouchableOpacity>
             </View>
@@ -95,7 +100,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
-        position: "relative",
     },
     flip: {
         position: "absolute",
@@ -114,9 +118,8 @@ const styles = StyleSheet.create({
     },
     takePhotoContainer: {
         width: "100%",
-        height: 240,
+        height: 50,
         flex: 1,
-        position: "absolute",
         top: 0,
         right: 0,
         borderColor: '#fafa',

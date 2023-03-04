@@ -10,7 +10,7 @@ export default function PostsScreen({ route }) {
     }, [route.params])
 
 
-    console.log("route.params", route.params)
+    console.log("route.params.picture", route.params.picture)
     return (
         <View style={styles.container}>
             <Text>PostsScreen</Text>
