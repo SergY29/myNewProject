@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from "expo-camera";
@@ -46,14 +47,11 @@ export default function CreatePostsScreen() {
         )
     }
 
-
-    console.log("photo", picture)
-
     return (
         <View style={styles.container}>
             <Camera style={styles.camera} type={type} ref={setCamera}>
                 {picture && (<View style={styles.takePhotoContainer}>
-                    <Image sourse={{ uri: picture }} style={{ height: 200, width: 200 }} />
+                    <Image sourse={{ uri: picture }} style={{ height: "100%", width: "100%" }} />
                 </View>)}
                 <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
                     <AntDesign name="camerao" size={35} color="white" />
@@ -62,17 +60,25 @@ export default function CreatePostsScreen() {
                     <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
                 </TouchableOpacity>
             </Camera>
+            <View style={styles.form} >
+                <TouchableOpacity activeOpacity={0.8} style={styles.buttonPublish} onPress={() => { }}>
+                    <Text style={styles.title}>Опубликовать</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        marginHorizontal: 16,
     },
     camera: {
-        flex: 1,
-        justifyContent: "flex-end",
+        height: 240,
+        marginTop: 32,
+        borderRadius: 20,
+        justifyContent: "center",
         alignItems: "center",
         position: "relative",
     },
@@ -92,19 +98,37 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(255, 255, 255, 0.3)",
     },
     takePhotoContainer: {
+        width: "100%",
+        height: 240,
         flex: 1,
         position: "absolute",
-        top: 1,
-        left: 1,
-        borderColor: '#fff',
-        borderWidth: 1,
+        top: 0,
+        right: 0,
+        borderColor: '#000',
+        borderWidth: 5,
+    },
+    takePhoto: {
+        width: '100%',
+    },
+    form: {
 
     },
-    picture: {
-        backgroundColor: 'balck',
-        height: 200,
-        width: 200
-    }
+    buttonPublish: {
+        backgroundColor: '#FF6C00',
+        alignItems: 'center',
+        borderRadius: 100,
+        padding: 0,
+        marginTop: 32,
+    },
+    title: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+
+        color: '#fff',
+        paddingBottom: 16,
+        paddingTop: 16,
+    },
 });
 
 
@@ -113,9 +137,8 @@ const styles = StyleSheet.create({
 
 //     camera: {
 //         borderRadius: 50,
-//         height: 240,
-//         marginTop: 32,
-//         marginHorizontal: 16,
+//
+//
 //         justifyContent: "center",
 //         alignItems: "center",
 //     },
