@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
-export default function CreatePostsScreen() {
+export default function CreatePostsScreen({ navigation }) {
     const [camera, setCamera] = useState(null);
     const [picture, setPicture] = useState(null)
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -39,6 +39,10 @@ export default function CreatePostsScreen() {
         console.log("photo", uri)
     }
 
+    const sendPhoto = async () => {
+        navigation.navigate('Posts', { picture });
+    }
+
     const setTypeCamera = () => {
         setType(
             type === Camera.Constants.Type.back
@@ -61,7 +65,7 @@ export default function CreatePostsScreen() {
                 </TouchableOpacity>
             </Camera>
             <View style={styles.form} >
-                <TouchableOpacity activeOpacity={0.8} style={styles.buttonPublish} onPress={() => { }}>
+                <TouchableOpacity activeOpacity={0.8} style={styles.buttonPublish} onPress={sendPhoto}>
                     <Text style={styles.title}>Опубликовать</Text>
                 </TouchableOpacity>
             </View>
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 0,
         right: 0,
-        borderColor: '#000',
+        borderColor: '#fafa',
         borderWidth: 5,
     },
     takePhoto: {
