@@ -45,8 +45,10 @@ export default function CreatePostsScreen({ navigation }) {
         console.log("photo", uri)
     }
 
-    const sendPhoto = async () => {
+    const sendPhoto = () => {
         navigation.navigate('Posts', { picture });
+        setbuttonDisabled(false);
+        setPicture(null);
     }
 
     const setTypeCamera = () => {
@@ -57,6 +59,7 @@ export default function CreatePostsScreen({ navigation }) {
         )
     }
 
+    console.log(picture);
     return (
         <View style={styles.container}>
             <Camera style={styles.camera} type={type} ref={setCamera}>
