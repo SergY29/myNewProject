@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -11,6 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export default function CreatePostsScreen({ navigation }) {
+    const [buttonDisabled, setbuttonDisabled] = useState(true);
     const [camera, setCamera] = useState(null);
     const [picture, setPicture] = useState(null)
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -23,7 +23,11 @@ export default function CreatePostsScreen({ navigation }) {
             const { status } = await Camera.requestCameraPermissionsAsync();
             setHasPermission(status === "granted");
         })();
-    }, []);
+
+        if (picture) {
+            setbuttonDisabled(false)
+        }
+    }, [picture]);
 
     if (hasPermission === null) {
         return <View />;
@@ -32,6 +36,8 @@ export default function CreatePostsScreen({ navigation }) {
     if (hasPermission === false) {
         return <Text>No access to camera</Text>;
     }
+
+
 
     const takePhoto = async () => {
         const { uri } = await camera.takePictureAsync()
@@ -65,18 +71,20 @@ export default function CreatePostsScreen({ navigation }) {
                 </TouchableOpacity>
             </Camera>
             <View style={styles.form} >
-                <TouchableOpacity activeOpacity={0.8} style={styles.buttonPublish} onPress={sendPhoto}>
-                    <Text style={styles.title}>Опубликовать</Text>
+                <TouchableOpacity disabled={buttonDisabled} activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
+                    <Text style={{ ...styles.title, color: picture ? '#fff' : '#BDBDBD' }}>Опубликовать</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginHorizontal: 16,
+        paddingHorizontal: 16,
+        backgroundColor: '#fff',
     },
     camera: {
         height: 240,
@@ -118,7 +126,6 @@ const styles = StyleSheet.create({
 
     },
     buttonPublish: {
-        backgroundColor: '#FF6C00',
         alignItems: 'center',
         borderRadius: 100,
         padding: 0,
@@ -129,7 +136,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 19,
 
-        color: '#fff',
         paddingBottom: 16,
         paddingTop: 16,
     },
