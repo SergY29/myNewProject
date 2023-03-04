@@ -42,13 +42,13 @@ export default function CreatePostsScreen({ navigation }) {
     const takePhoto = async () => {
         const { uri } = await camera.takePictureAsync()
         setPicture(uri);
+        setbuttonDisabled(true);
         console.log("photo", uri)
     }
 
     const sendPhoto = () => {
         navigation.navigate('Posts', { picture });
         setbuttonDisabled(false);
-        setPicture(null);
     }
 
     const setTypeCamera = () => {
