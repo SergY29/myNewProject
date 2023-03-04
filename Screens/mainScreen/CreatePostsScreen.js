@@ -33,13 +33,9 @@ export default function CreatePostsScreen() {
     }
 
     const takePhoto = async () => {
-        const photo = await camera.takePictureAsync()
-
-        await setPicture(photo.uri);
-
-        console.log("photo", picture)
-
-
+        const { uri } = await camera.takePictureAsync()
+        setPicture(uri);
+        console.log("photo", uri)
     }
 
     const setTypeCamera = () => {
@@ -51,6 +47,7 @@ export default function CreatePostsScreen() {
     }
 
 
+    console.log("photo", picture)
 
     return (
         <View style={styles.container}>
