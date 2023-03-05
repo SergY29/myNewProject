@@ -23,6 +23,7 @@ export default function CreatePostsScreen({ navigation }) {
         (async () => {
             const { status } = await Camera.requestCameraPermissionsAsync();
             await MediaLibrary.requestPermissionsAsync();
+            await Location.requestForegroundPermissionsAsync();
             setHasPermission(status === "granted");
         })();
 
@@ -50,7 +51,7 @@ export default function CreatePostsScreen({ navigation }) {
 
     const sendPhoto = async () => {
         try {
-            navigation.navigate('Posts', { picture });
+            navigation.navigate("DefaultScreen", { picture });
             setPicture(null);
         } catch (error) {
         }

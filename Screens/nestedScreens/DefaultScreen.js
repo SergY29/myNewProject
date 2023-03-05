@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, StyleSheet, FlatList, Image, Button } from "react-native";
 
 
-export default function PostsScreen({ route }) {
+export default function DefaultScreen({ route, navigation }) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
@@ -29,6 +29,8 @@ export default function PostsScreen({ route }) {
                     }} />
                 </View>)}
             />
+            <Button title="Map" onPress={() => navigation.navigate('Map')} />
+            <Button title="Comments" onPress={() => navigation.navigate('Comments')} />
         </View>
     );
 };

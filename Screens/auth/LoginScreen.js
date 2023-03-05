@@ -19,7 +19,7 @@ export default function LoginScreen({ navigation }) {
         console.log(state);
         Keyboard.dismiss();
         setState(initialState);
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
     };
 
     const onPushWithoutInput = () => {
