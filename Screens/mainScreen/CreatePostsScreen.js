@@ -89,30 +89,33 @@ export default function CreatePostsScreen({ navigation }) {
         <TouchableWithoutFeedback onPress={onPushWithoutInput}>
             <View style={styles.container}>
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
-                    {!picture ?
-                        <Camera style={styles.camera} type={type} ref={setCamera}>
-                            <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
-                                <AntDesign name="camerao" size={35} color="white" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.flip} onPress={setTypeCamera}>
-                                <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
-                            </TouchableOpacity>
-                        </Camera>
-                        :
+                    <View style={{ ...styles.form, paddingBottom: isShowKey ? 10 : 120 }}>
+                        {!picture ?
+                            <Camera style={styles.camera} type={type} ref={setCamera}>
+                                <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
+                                    <AntDesign name="camerao" size={35} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.flip} onPress={setTypeCamera}>
+                                    <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
+                                </TouchableOpacity>
+                            </Camera>
+                            :
 
-                        <Image sourse={{ uri: picture }} style={{
-                            height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
-                        }} />
-
-
-                    }
-
-                    <View style={{ ...styles.form, paddingBottom: isShowKey ? 50 : 194 }}>
-
+                            <Image sourse={{ uri: picture }} style={{
+                                height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
+                                marginBottom: 10,
+                            }} />
+                        }
+                        <View>
+                            <TextInput
+                                value={about}
+                                onChangeText={(value) => setAbout(value)}
+                                placeholder="Название..."
+                                style={styles.input}
+                            />
+                        </View>
                         <TextInput
-                            value={about}
-                            onChangeText={(value) => setAbout(value)}
-                            placeholder="Название..."
+                            placeholder="Местность..."
                             style={styles.input}
                         />
                         <TouchableOpacity activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
@@ -122,7 +125,7 @@ export default function CreatePostsScreen({ navigation }) {
                     </View>
                 </KeyboardAvoidingView>
             </View >
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback >
     );
 }
 
@@ -132,10 +135,12 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 16,
         backgroundColor: '#fff',
+        justifyContent: 'flex-end',
     },
     camera: {
         height: 240,
         marginTop: 32,
+        marginBottom: 10,
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
@@ -157,7 +162,7 @@ const styles = StyleSheet.create({
     },
 
     form: {
-        marginTop: 70,
+        marginTop: 40,
     },
     input: {
         fontFamily: 'Roboto-Regular',
