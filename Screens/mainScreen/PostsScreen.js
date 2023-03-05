@@ -6,11 +6,16 @@ export default function PostsScreen({ route }) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        setPosts(prevState => [...prevState, route.params])
+        if (route.params) {
+            setPosts(prevState => [...prevState, route.params])
+        }
+
     }, [route.params])
 
+    if (route.params) {
+        console.log("route.params.picture", route.params.picture)
+    }
 
-    console.log("route.params.picture", route.params.picture)
     return (
         <View style={styles.container}>
             <Text>PostsScreen</Text>
