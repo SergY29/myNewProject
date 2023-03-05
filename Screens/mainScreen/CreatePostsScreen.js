@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -142,12 +142,3 @@ const styles = StyleSheet.create({
 
 
 
-
-
-//     camera: {
-//         borderRadius: 50,
-//
-//
-//         justifyContent: "center",
-//         alignItems: "center",
-//     },
