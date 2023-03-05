@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -20,13 +21,14 @@ export default function CreatePostsScreen({ navigation }) {
 
     useEffect(() => {
         (async () => {
-
             const { status } = await Camera.requestCameraPermissionsAsync();
+            await MediaLibrary.requestPermissionsAsync();
             setHasPermission(status === "granted");
         })();
 
 
-    }, [picture]);
+    }, []);
+
 
     if (hasPermission === null) {
         return <View />;
@@ -39,7 +41,9 @@ export default function CreatePostsScreen({ navigation }) {
 
 
     const takePhoto = async () => {
-        const { uri } = await camera.takePictureAsync()
+        const { uri } = await camera.takePictureAsync();
+        const location = await Location.getCurrentPositionAsync();
+        console.log("location", location)
         setPicture(uri);
         console.log("photo", uri)
     }
