@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 
 
 export default function PostsScreen({ route }) {
@@ -7,18 +7,28 @@ export default function PostsScreen({ route }) {
 
     useEffect(() => {
         if (route.params) {
-            setPosts(prevState => [...prevState, route.params])
+            if (route.params.picture !== null) {
+                setPosts(prevState => [...prevState, route.params])
+            }
+
         }
 
     }, [route.params])
 
-    if (route.params) {
-        console.log("route.params.picture", route.params.picture)
+    if (posts) {
+        console.log(posts)
     }
 
     return (
         <View style={styles.container}>
-            <Text>PostsScreen</Text>
+            <FlatList data={posts} keyExtractor={(item, idx) => idx.toString()}
+                renderItem={({ item }) =>
+                (<View>
+                    <Image sourse={{ uri: item.picture }} style={{
+                        height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
+                    }} />
+                </View>)}
+            />
         </View>
     );
 };
@@ -26,8 +36,9 @@ export default function PostsScreen({ route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        paddingHorizontal: 16,
+        // alignItems: "center",
+        // justifyContent: "center",
         backgroundColor: "#fff",
     },
 });

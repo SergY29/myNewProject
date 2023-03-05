@@ -74,7 +74,7 @@ export default function CreatePostsScreen({ navigation }) {
                 :
 
                 <Image sourse={{ uri: picture }} style={{
-                    height: 230, width: "100%", borderColor: '#fafa', borderWidth: 5,
+                    height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
                 }} />
 
             }
@@ -116,18 +116,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         backgroundColor: "rgba(255, 255, 255, 0.3)",
     },
-    takePhotoContainer: {
-        width: "100%",
-        height: 50,
-        flex: 1,
-        top: 0,
-        right: 0,
-        borderColor: '#fafa',
-        borderWidth: 5,
-    },
-    takePhoto: {
-        width: '100%',
-    },
+
     form: {
 
     },
