@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Image, Button } from "react-native";
+import { View, StyleSheet, FlatList, Image, Button, Text } from "react-native";
 
 
 export default function DefaultScreen({ route, navigation }) {
@@ -27,10 +27,14 @@ export default function DefaultScreen({ route, navigation }) {
                     <Image sourse={{ uri: item.picture }} style={{
                         height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
                     }} />
+                    <Text>
+                        {item.about}
+                    </Text>
+                    <Button title="Map" onPress={() => navigation.navigate('Map', { location: item.location })} />
+                    <Button title="Comments" onPress={() => navigation.navigate('Comments')} />
                 </View>)}
             />
-            <Button title="Map" onPress={() => navigation.navigate('Map')} />
-            <Button title="Comments" onPress={() => navigation.navigate('Comments')} />
+
         </View>
     );
 };

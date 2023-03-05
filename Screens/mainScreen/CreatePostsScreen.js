@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+    View, Text, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView,
+    Platform, TouchableWithoutFeedback, Keyboard,
+} from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
@@ -9,11 +12,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
-
 export default function CreatePostsScreen({ navigation }) {
-
     const [camera, setCamera] = useState(null);
     const [picture, setPicture] = useState(null)
+
+    const [isShowKey, setIsShowKey] = useState(false);
+
+    const [about, setAbout] = useState('');
+    const [location, setLocation] = useState('');
+
     const [type, setType] = useState(Camera.Constants.Type.back);
     //premissions
     const [hasPermission, setHasPermission] = useState(null);
@@ -43,16 +50,24 @@ export default function CreatePostsScreen({ navigation }) {
 
     const takePhoto = async () => {
         const { uri } = await camera.takePictureAsync();
-        const location = await Location.getCurrentPositionAsync();
-        console.log("location", location)
+        const locationValue = await Location.getCurrentPositionAsync();
+        setLocation(locationValue)
+        console.log("location", locationValue)
         setPicture(uri);
         console.log("photo", uri)
     }
 
     const sendPhoto = async () => {
         try {
-            navigation.navigate("DefaultScreen", { picture });
+            navigation.navigate("DefaultScreen", {
+                picture,
+                about,
+                location,
+            });
+            setIsShowKey(false);
+            Keyboard.dismiss();
             setPicture(null);
+            setAbout('');
         } catch (error) {
         }
     }
@@ -65,30 +80,49 @@ export default function CreatePostsScreen({ navigation }) {
         )
     }
 
+    const onPushWithoutInput = () => {
+        Keyboard.dismiss();
+        setIsShowKey(false);
+    }
+
     return (
-        <View style={styles.container}>
-            {!picture ?
-                <Camera style={styles.camera} type={type} ref={setCamera}>
-                    <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
-                        <AntDesign name="camerao" size={35} color="white" />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.flip} onPress={setTypeCamera}>
-                        <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
-                    </TouchableOpacity>
-                </Camera>
-                :
+        <TouchableWithoutFeedback onPress={onPushWithoutInput}>
+            <View style={styles.container}>
+                <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                    {!picture ?
+                        <Camera style={styles.camera} type={type} ref={setCamera}>
+                            <TouchableOpacity style={styles.buttonSnap} onPress={takePhoto}>
+                                <AntDesign name="camerao" size={35} color="white" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.flip} onPress={setTypeCamera}>
+                                <MaterialCommunityIcons name="camera-flip-outline" size={24} color="white" />
+                            </TouchableOpacity>
+                        </Camera>
+                        :
 
-                <Image sourse={{ uri: picture }} style={{
-                    height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
-                }} />
+                        <Image sourse={{ uri: picture }} style={{
+                            height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
+                        }} />
 
-            }
-            <View style={styles.form} >
-                <TouchableOpacity activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
-                    <Text style={{ ...styles.title, color: picture ? '#fff' : '#BDBDBD' }}>Опубликовать</Text>
-                </TouchableOpacity>
-            </View>
-        </View >
+
+                    }
+
+                    <View style={{ ...styles.form, paddingBottom: isShowKey ? 50 : 194 }}>
+
+                        <TextInput
+                            value={about}
+                            onChangeText={(value) => setAbout(value)}
+                            placeholder="Название..."
+                            style={styles.input}
+                        />
+                        <TouchableOpacity activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
+                            <Text style={{ ...styles.title, color: picture ? '#fff' : '#BDBDBD' }}>Опубликовать</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </KeyboardAvoidingView>
+            </View >
+        </TouchableWithoutFeedback>
     );
 }
 
@@ -123,6 +157,20 @@ const styles = StyleSheet.create({
     },
 
     form: {
+        marginTop: 70,
+    },
+    input: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,
+        lineHeight: 19,
+        height: 50,
+        paddingTop: 16,
+        paddingBottom: 15,
+        paddingLeft: 16,
+        borderBottomColor: '#E8E8E8',
+        borderBottomWidth: 2,
+        marginBottom: 16,
+        color: '#BDBDBD',
 
     },
     buttonPublish: {
