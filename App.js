@@ -10,6 +10,7 @@ import { useRoute } from './router';
 import { store } from './redux/store';
 
 
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
