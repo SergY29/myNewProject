@@ -3,8 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { Provider } from 'react-redux';
+
 
 import { useRoute } from './router';
+import { store } from './redux/store';
 
 
 export default function App() {
@@ -26,11 +29,11 @@ export default function App() {
   }
 
   return (
-    <>
+    <Provider store={store}>
       <StatusBar style="auto" />
       <NavigationContainer onLayout={onLayoutRootView}>
         {routing}
       </NavigationContainer>
-    </>
+    </Provider>
   );
 }
