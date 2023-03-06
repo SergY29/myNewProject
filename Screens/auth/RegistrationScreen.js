@@ -4,6 +4,9 @@ import {
     ImageBackground, StyleSheet, Text, TextInput, View, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import { authSingUpUser } from "../../redux/auth/authOperations";
 
 const initialState = {
     login: '',
@@ -16,9 +19,12 @@ export default function RegistrationScreen({ navigation }) {
     const [isShowKey, setIsShowKey] = useState(false);
     const [showMeaning, setShowMeaning] = useState(true);
 
-    const onSubmit = () => {
+    const dispatch = useDispatch();
+
+    const handleSubmit = () => {
         setIsShowKey(false);
         console.log(state);
+        dispatch(authSingUpUser(state))
         Keyboard.dismiss();
         setState(initialState)
     };
@@ -63,7 +69,7 @@ export default function RegistrationScreen({ navigation }) {
                                     <Text style={styles.showText}>{showMeaning ? "Показать" : "Скрыть"}</Text>
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={onSubmit}>
+                            <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={handleSubmit}>
                                 <Text style={styles.btnTitle}>Зарегистрироваться</Text>
                             </TouchableOpacity>
                             <View style={styles.textContainer} >

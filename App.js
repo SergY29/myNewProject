@@ -17,7 +17,7 @@ export default function App() {
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   });
 
-  const routing = useRoute(true);
+  const routing = useRoute(false);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {

@@ -1,5 +1,4 @@
-import * as firebase from "firebase";
-import 'firebase/auth';
+import { initializeApp } from "firebase/app";
 
 
 
@@ -14,6 +13,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
-export default firebase;
+
+
+
+
+
+
