@@ -1,23 +1,30 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Provider } from 'react-redux';
-
-
 import { useRoute } from './router';
 import { store } from './redux/store';
+
+import { app } from './firebase/config';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
   const [fontsLoaded] = useFonts({
     'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   });
 
-  const routing = useRoute(false);
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => setUser(user));
+
+  const routing = useRoute(user);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {

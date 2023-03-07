@@ -3,9 +3,12 @@ import {
     ImageBackground, StyleSheet, Text, TextInput, View, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard, TouchableOpacity,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import { authSingInUser } from "../../redux/auth/authOperations";
 
 const initialState = {
-    login: '',
+    email: '',
     password: '',
 }
 
@@ -14,12 +17,13 @@ export default function LoginScreen({ navigation }) {
     const [isShowKey, setIsShowKey] = useState(false);
     const [showMeaning, setShowMeaning] = useState(true);
 
+    const dispatch = useDispatch();
+
     const onSubmit = () => {
         setIsShowKey(false);
-        console.log(state);
         Keyboard.dismiss();
+        dispatch(authSingInUser(state))
         setState(initialState);
-        // navigation.navigate('Home');
     };
 
     const onPushWithoutInput = () => {
@@ -35,9 +39,9 @@ export default function LoginScreen({ navigation }) {
                     <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
                         <View style={{ ...styles.form, paddingBottom: isShowKey ? 32 : 144 }}>
                             <TextInput
-                                value={state.login}
-                                onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
-                                placeholder="Логин"
+                                value={state.email}
+                                onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
+                                placeholder="Адрес электронной почты"
                                 style={styles.input}
                                 onFocus={() => setIsShowKey(true)}
                             />
