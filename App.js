@@ -7,8 +7,8 @@ import { Provider } from 'react-redux';
 import { useRoute } from './router';
 import { store } from './redux/store';
 
-import { app } from './firebase/config';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase/config';
+import { onAuthStateChanged } from "firebase/auth";
 
 
 
@@ -21,7 +21,6 @@ export default function App() {
     'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   });
 
-  const auth = getAuth(app);
   onAuthStateChanged(auth, (user) => setUser(user));
 
   const routing = useRoute(user);

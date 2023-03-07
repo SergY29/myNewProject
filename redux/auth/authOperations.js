@@ -1,11 +1,10 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from '../../firebase/config';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../firebase/config';
 
 
 
 
 export const authSingInUser = ({ email, password }) => async (dispatch, getState) => {
-    const auth = getAuth(app)
     try {
         const user = await signInWithEmailAndPassword(auth, email, password);
         console.log('user', user)
@@ -16,9 +15,7 @@ export const authSingInUser = ({ email, password }) => async (dispatch, getState
 }
 
 export const authSingUpUser = ({ email, password, nickname }) => async (dispatch, getState) => {
-    const auth = getAuth(app)
     try {
-        console
         const user = await createUserWithEmailAndPassword(auth, email, password);
         console.log('user', user)
     } catch (error) {
