@@ -35,7 +35,7 @@ export const authSingUpUser = ({ email, password, login }) => async (dispatch, g
 
 export const authLogOutUser = () => async (dispatch, getState) => {
     try {
-
+        await signOut(auth)
     } catch (error) {
         console.log('error', error)
         console.log('error.message', error.message)
@@ -44,7 +44,15 @@ export const authLogOutUser = () => async (dispatch, getState) => {
 
 export const authStateChangeUser = () => async (dispatch, getState) => {
     try {
-        await onAuthStateChanged(auth, (user) => setUser(user));
+        await onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(authSlice.actions.authChangeState({ stateChange: true }))
+                dispatch(authSlice.actions.updateUserProfile({
+                    userId: user.uid,
+                    nickName: user.displayName,
+                }))
+            }
+        });
     } catch (error) {
         console.log('error', error)
         console.log('error.message', error.message)

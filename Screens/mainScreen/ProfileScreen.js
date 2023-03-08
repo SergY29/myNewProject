@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { authLogOutUser } from "../../redux/auth/authOperations"
 
 
 export default function ProfileScreen() {
     return (
         <View style={styles.container}>
             <Text>ProfileScreen</Text>
+            <Button title="sign out" onPress={authLogOutUser} />
         </View>
     );
 };

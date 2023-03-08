@@ -5,19 +5,21 @@ import { useRoute } from '../router';
 
 import { auth } from '../firebase/config';
 import { onAuthStateChanged } from "firebase/auth";
+import { authStateChangeUser } from "../redux/auth/authOperations"
 
 
 export const Main = () => {
-    const [user, setUser] = useState(null);
-    const state = useSelector((state) => state);
-    const routing = useRoute(user);
 
-    console.log(state)
+    const dispatch = useDispatch();
+    const { stateChange } = useSelector((state) => state.auth);
+
 
     useEffect(() => {
+        dispatch(authStateChangeUser())
     }, [])
 
-    onAuthStateChanged(auth, (user) => setUser(user));
+
+    const routing = useRoute(stateChange);
 
     return (
         <NavigationContainer >
