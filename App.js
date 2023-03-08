@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
-import { Main } from './components/Main1';
+import { Main } from './components/Main';
 
 
 
