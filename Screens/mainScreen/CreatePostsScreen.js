@@ -6,6 +6,8 @@ import {
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
+import { storage } from '../../firebase/config';
+import { ref, uploadBytes } from "firebase/storage";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -46,19 +48,30 @@ export default function CreatePostsScreen({ navigation }) {
         return <Text>No access to camera</Text>;
     }
 
+    const uploadFotoToServer = async () => {
+        const response = await fetch(picture);
+
+        const file = await response.blob();
+        const postId = Date.now().toString();
+
+        const storageRef = ref(storage, `postImage/${postId}`);
+
+        const data = await uploadBytes(storageRef, `${file}`);
+        console.log('photo to server', data)
+    }
 
 
     const takePhoto = async () => {
         const { uri } = await camera.takePictureAsync();
         const locationValue = await Location.getCurrentPositionAsync();
         setLocation(locationValue)
-        console.log("location", locationValue)
         setPicture(uri);
         console.log("photo", uri)
     }
 
     const sendPhoto = async () => {
         try {
+            uploadFotoToServer();
             navigation.navigate("DefaultScreen", {
                 picture,
                 about,
