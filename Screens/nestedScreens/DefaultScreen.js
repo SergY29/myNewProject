@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, Image, Button, Text } from "react-native";
+//firestore
+import { collection, getDocs } from "firebase/firestore";
+
+import { fireStore } from '../../firebase/config';
 
 
-export default function DefaultScreen({ route, navigation }) {
+export default function DefaultScreen({ navigation }) {
     const [posts, setPosts] = useState([])
 
+    const getAllPosts = async () => {
+        const querySnapshot = await getDocs(collection(fireStore, "posts"));
+
+        setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    }
+
     useEffect(() => {
-        if (route.params) {
-            if (route.params.picture !== null) {
-                setPosts(prevState => [...prevState, route.params])
-            }
+        getAllPosts();
 
-        }
-
-    }, [route.params])
+    }, [])
 
     if (posts) {
         console.log('postScreen', posts)

@@ -7,6 +7,7 @@ import {
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
+//firebase
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 //icons
@@ -67,19 +68,13 @@ export default function CreatePostsScreen({ navigation }) {
 
     const sendPhoto = () => {
         uploadPostToServer()
-        try {
 
-            navigation.navigate("DefaultScreen", {
-                picture,
-                about,
-                location,
-            });
-            setIsShowKey(false);
-            Keyboard.dismiss();
-            setPicture(null);
-            setAbout('');
-        } catch (error) {
-        }
+        navigation.navigate("DefaultScreen");
+
+        setIsShowKey(false);
+        Keyboard.dismiss();
+        setPicture(null);
+        setAbout('');
     }
 
     const uploadPostToServer = async () => {
