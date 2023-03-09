@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
     View, Text, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard,
@@ -6,39 +7,42 @@ import {
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
-import { storage } from '../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+//storage
+import { storage, fireStore } from '../../firebase/config';
 
 
 
 export default function CreatePostsScreen({ navigation }) {
+    //control
     const [camera, setCamera] = useState(null);
-    const [picture, setPicture] = useState(null)
-
     const [isShowKey, setIsShowKey] = useState(false);
-
+    const [type, setType] = useState(Camera.Constants.Type.back);
+    //post data
+    const [picture, setPicture] = useState(null)
     const [about, setAbout] = useState('');
     const [location, setLocation] = useState('');
-
-    const [type, setType] = useState(Camera.Constants.Type.back);
     //premissions
     const [hasPermission, setHasPermission] = useState(null);
+    //state
+    const { userId, nickName } = useSelector((state) => state.auth)
+
 
 
     useEffect(() => {
         (async () => {
             const { status } = await Camera.requestCameraPermissionsAsync();
-            let { statusValue } = await Location.requestForegroundPermissionsAsync();
+            await Location.requestForegroundPermissionsAsync();
 
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
             setHasPermission(status === "granted");
 
             await MediaLibrary.requestPermissionsAsync();
-            // await Location.requestForegroundPermissionsAsync();
         })();
 
 
@@ -47,38 +51,24 @@ export default function CreatePostsScreen({ navigation }) {
 
     if (hasPermission === null) {
         return <View />;
-
     }
     if (hasPermission === false) {
         return <Text>No access to camera</Text>;
     }
 
-    const uploadFotoToServer = async () => {
-        const response = await fetch(picture);
-        const file = await response.blob();
-
-        const postId = Date.now().toString();
-        const storageRef = ref(storage, `postImage/${postId}`);
-
-        await uploadBytes(storageRef, `${file}`);
-
-        const starsRef = ref(storage, `postImage/${postId}`);
-        const processedPhoto = await getDownloadURL(starsRef)
-        console.log('processedPhoto', processedPhoto)
-    }
-
 
     const takePhoto = async () => {
+        console.log("about", about)
+        console.log("location", location)
         const { uri } = await camera.takePictureAsync();
-        const locationValue = await Location.getCurrentPositionAsync();
-        // setLocation(locationValue)
         setPicture(uri);
-        console.log("photo", uri)
+        console.log("photo-uri", uri)
     }
 
-    const sendPhoto = async () => {
+    const sendPhoto = () => {
+        uploadPostToServer()
         try {
-            uploadFotoToServer();
+
             navigation.navigate("DefaultScreen", {
                 picture,
                 about,
@@ -90,6 +80,37 @@ export default function CreatePostsScreen({ navigation }) {
             setAbout('');
         } catch (error) {
         }
+    }
+
+    const uploadPostToServer = async () => {
+        try {
+            const photo = await uploadFotoToServer()
+            const createPost = await addDoc(collection(fireStore, "posts"), {
+                photo,
+                about,
+                location: location.coords,
+                userId,
+                nickName
+            });
+
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
+
+    const uploadFotoToServer = async () => {
+        const response = await fetch(picture);
+        const file = await response.blob();
+        const postId = Date.now().toString();
+        const storageRef = ref(storage, `postImage/${postId}`);
+
+        await uploadBytes(storageRef, `${file}`);
+
+        const starsRef = ref(storage, `postImage/${postId}`);
+        const processedPhoto = await getDownloadURL(starsRef)
+        console.log('processedPhoto', processedPhoto)
+
+        return processedPhoto;
     }
 
     const setTypeCamera = () => {
