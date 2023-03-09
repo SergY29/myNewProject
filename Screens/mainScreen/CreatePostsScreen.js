@@ -30,13 +30,15 @@ export default function CreatePostsScreen({ navigation }) {
 
     useEffect(() => {
         (async () => {
-
-
-
             const { status } = await Camera.requestCameraPermissionsAsync();
-            await MediaLibrary.requestPermissionsAsync();
-            await Location.requestForegroundPermissionsAsync();
+            let { statusValue } = await Location.requestForegroundPermissionsAsync();
+
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
             setHasPermission(status === "granted");
+
+            await MediaLibrary.requestPermissionsAsync();
+            // await Location.requestForegroundPermissionsAsync();
         })();
 
 
@@ -63,14 +65,13 @@ export default function CreatePostsScreen({ navigation }) {
         const starsRef = ref(storage, `postImage/${postId}`);
         const processedPhoto = await getDownloadURL(starsRef)
         console.log('processedPhoto', processedPhoto)
-
     }
 
 
     const takePhoto = async () => {
         const { uri } = await camera.takePictureAsync();
         const locationValue = await Location.getCurrentPositionAsync();
-        setLocation(locationValue)
+        // setLocation(locationValue)
         setPicture(uri);
         console.log("photo", uri)
     }
