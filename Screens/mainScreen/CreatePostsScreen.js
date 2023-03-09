@@ -7,7 +7,7 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 import { storage } from '../../firebase/config';
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -30,6 +30,9 @@ export default function CreatePostsScreen({ navigation }) {
 
     useEffect(() => {
         (async () => {
+
+
+
             const { status } = await Camera.requestCameraPermissionsAsync();
             await MediaLibrary.requestPermissionsAsync();
             await Location.requestForegroundPermissionsAsync();
@@ -50,14 +53,17 @@ export default function CreatePostsScreen({ navigation }) {
 
     const uploadFotoToServer = async () => {
         const response = await fetch(picture);
-
         const file = await response.blob();
-        const postId = Date.now().toString();
 
+        const postId = Date.now().toString();
         const storageRef = ref(storage, `postImage/${postId}`);
 
-        const data = await uploadBytes(storageRef, `${file}`);
-        console.log('photo to server', data)
+        await uploadBytes(storageRef, `${file}`);
+
+        const starsRef = ref(storage, `postImage/${postId}`);
+        const processedPhoto = await getDownloadURL(starsRef)
+        console.log('processedPhoto', processedPhoto)
+
     }
 
 

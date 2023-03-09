@@ -16,7 +16,7 @@ export default function DefaultScreen({ route, navigation }) {
     }, [route.params])
 
     if (posts) {
-        console.log(posts)
+        console.log('postScreen', posts)
     }
 
     return (
