@@ -11,11 +11,11 @@ export default function DefaultScreen({ navigation }) {
 
     const getAllPosts = async () => {
         const querySnapshot = await getDocs(collection(fireStore, "posts"));
-
         setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
     useEffect(() => {
+        console.log('j,yjdkztvcz')
         getAllPosts();
 
     }, [])

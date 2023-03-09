@@ -5,7 +5,7 @@ import {
     Platform, TouchableWithoutFeedback, Keyboard,
 } from "react-native";
 import { Camera } from "expo-camera";
-import * as MediaLibrary from "expo-media-library";
+
 import * as Location from "expo-location";
 //firebase
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -37,15 +37,12 @@ export default function CreatePostsScreen({ navigation }) {
     useEffect(() => {
         (async () => {
             const { status } = await Camera.requestCameraPermissionsAsync();
+            setHasPermission(status === "granted");
             await Location.requestForegroundPermissionsAsync();
 
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
-            setHasPermission(status === "granted");
-
-            await MediaLibrary.requestPermissionsAsync();
         })();
-
 
     }, []);
 
