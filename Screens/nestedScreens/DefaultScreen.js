@@ -32,11 +32,15 @@ export default function DefaultScreen({ navigation }) {
                     <Image sourse={{ uri: item.picture }} style={{
                         height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
                     }} />
-                    <Text>
-                        {item.about}
-                    </Text>
-                    <Button title="Map" onPress={() => navigation.navigate('Map', { location: item.location })} />
-                    <Button title="Comments" onPress={() => navigation.navigate('Comments')} />
+                    <View>
+                        <Text>
+                            {item.about}
+                        </Text>
+                    </View>
+                    <View>
+                        <Button title="Map" onPress={() => navigation.navigate('Map', { location: item.location })} />
+                        <Button title="Comments" onPress={() => navigation.navigate('Comments')} />
+                    </View>
                 </View>)}
             />
 
