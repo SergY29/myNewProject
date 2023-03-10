@@ -12,9 +12,11 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 
-export default function CommentsScreen() {
+export default function CommentsScreen({ route }) {
     const [isShowKey, setIsShowKey] = useState(false);
     const [commemt, setCommemt] = useState('');
+
+    const { urlImage } = route.params;
 
 
     const onPushWithoutInput = () => {
@@ -32,11 +34,11 @@ export default function CommentsScreen() {
         <TouchableWithoutFeedback onPress={onPushWithoutInput}>
             <View style={styles.container}>
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
-                    <View style={{ ...styles.form, paddingBottom: isShowKey ? 10 : 16 }}>
-                        {/* <Image sourse={{ uri: picture }} style={{
-                                height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
-                                marginBottom: 10,
-                            }} /> */}
+                    <View style={{ ...styles.form, paddingBottom: isShowKey ? 100 : 10 }}>
+                        <Image sourse={{ uri: urlImage }} style={{
+                            height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3,
+                            marginBottom: 10,
+                        }} />
                         <View style={styles.commentsInnerButton}>
                             <TextInput
                                 value={commemt}
@@ -48,7 +50,6 @@ export default function CommentsScreen() {
                                 <AntDesign name="arrowup" size={20} color="white" />
                             </TouchableOpacity>
                         </View>
-
                     </View>
                 </KeyboardAvoidingView>
             </View >
