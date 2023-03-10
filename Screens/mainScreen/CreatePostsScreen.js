@@ -154,7 +154,6 @@ export default function CreatePostsScreen({ navigation }) {
                         <TouchableOpacity activeOpacity={0.8} style={{ ...styles.buttonPublish, backgroundColor: picture ? '#FF6C00' : '#F6F6F6' }} onPress={sendPhoto}>
                             <Text style={{ ...styles.title, color: picture ? '#fff' : '#BDBDBD' }}>Опубликовать</Text>
                         </TouchableOpacity>
-
                     </View>
                 </KeyboardAvoidingView>
             </View >
