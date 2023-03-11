@@ -5,8 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-
-
+import { useDispatch } from 'react-redux';
 
 import LoginScreen from './Screens/auth/LoginScreen';
 import RegistrationScreen from './Screens/auth/RegistrationScreen';
@@ -15,12 +14,21 @@ import PostsScreen from './Screens/mainScreen/PostsScreen';
 import CreatePostsScreen from './Screens/mainScreen/CreatePostsScreen';
 import ProfileScreen from './Screens/mainScreen/ProfileScreen';
 
+import { authLogOutUser } from "./redux/auth/authOperations"
+
 
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
 
 export const useRoute = (isAuth) => {
+    const dispatch = useDispatch();
+
+    const signOut = () => {
+        dispatch(authLogOutUser())
+    }
+
+
     if (!isAuth) {
         return (
             < AuthStack.Navigator >
@@ -34,17 +42,11 @@ export const useRoute = (isAuth) => {
         <MainTab.Navigator initialRouteName="Posts " screenOptions={{ tabBarShowLabel: false, tabBarActiveBackgroundColor: "#FF6C00", tabBarItemStyle: { borderRadius: 30 }, width: 300 }}>
             <MainTab.Screen options={{
                 headerShown: false,
-                headerRight: () => (
-                    <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Login')} >
-                        <Feather name="log-out" size={24} color="#BDBDBD" />
-                    </TouchableOpacity>
-                ),
                 headerTitle: "Публикации", headerTitleAlign: 'center', headerTitleStyle: {
                     fontFamily: 'Roboto-Medium',
                     fontWeight: "bold",
                     fontSize: 17,
                     color: "#212121",
-
                 },
                 headerStyle: {
                     shadowColor: " #FFFFFA4C",
@@ -94,6 +96,11 @@ export const useRoute = (isAuth) => {
                     shadowRadius: 2.22,
                     elevation: 3,
                 },
+                headerRight: () => (
+                    <TouchableOpacity style={{ marginRight: 20 }} onPress={signOut} >
+                        <Feather name="log-out" size={24} color="#BDBDBD" />
+                    </TouchableOpacity>
+                ),
                 tabBarIcon: ({ focused, size, color }) => (<MaterialCommunityIcons name="face-man-profile" size={size} color={color} />)
             }} name='Profile' component={ProfileScreen} />
         </MainTab.Navigator>
