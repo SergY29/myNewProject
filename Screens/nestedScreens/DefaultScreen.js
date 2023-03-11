@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, FlatList, Image, Button, Text, TouchableOpacity } from "react-native";
 //firestore
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 //icons
 import { Feather } from '@expo/vector-icons';
 
@@ -12,8 +12,9 @@ export default function DefaultScreen({ navigation }) {
     const [posts, setPosts] = useState([])
 
     const getAllPosts = async () => {
-        const querySnapshot = await getDocs(collection(fireStore, "posts"));
-        setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        await onSnapshot(collection(fireStore, "posts"), (snapshot) =>
+            setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        );
     }
 
     useEffect(() => {

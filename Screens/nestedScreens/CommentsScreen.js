@@ -4,7 +4,7 @@ import {
     View, Text, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard, FlatList, SafeAreaView
 } from "react-native";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, onSnapshot } from "firebase/firestore";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 
@@ -28,23 +28,23 @@ export default function CommentsScreen({ route }) {
     const createPost = async () => {
         setIsShowKey(false);
         Keyboard.dismiss();
+        setComment('');
 
         try {
             await addDoc(collection(fireStore, `posts/${postId}/comments`), {
                 comment,
                 nickName,
             });
-            setComment('');
-            getAllComments();
+
         } catch (e) {
             console.error("Error adding document: ", e);
         }
     }
 
     const getAllComments = async () => {
-        const querySnapshot = await getDocs(collection(fireStore, `posts/${postId}/comments`));
-        setAllComments(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-
+        await onSnapshot(collection(fireStore, `posts/${postId}/comments`), (snapshot) =>
+            setAllComments(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        );
     }
 
     const onPushWithoutInput = () => {
