@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
     View, Text, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView,
-    Platform, TouchableWithoutFeedback, Keyboard,
+    Platform, TouchableWithoutFeedback, Keyboard, FlatList, SafeAreaView
 } from "react-native";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 
@@ -13,13 +13,17 @@ import { fireStore } from '../../firebase/config';
 
 export default function CommentsScreen({ route }) {
     const [isShowKey, setIsShowKey] = useState(true);
-    const [commemt, setCommemt] = useState('');
+    const [comment, setComment] = useState('');
+    const [allComments, setAllComments] = useState([])
     //route params
     const { urlImage, postId } = route.params;
     //selector
     const { nickName } = useSelector((state) => state.auth)
 
+    useEffect(() => {
+        getAllComments();
 
+    }, [])
 
     const createPost = async () => {
         setIsShowKey(false);
@@ -27,13 +31,20 @@ export default function CommentsScreen({ route }) {
 
         try {
             await addDoc(collection(fireStore, `posts/${postId}/comments`), {
-                commemt,
+                comment,
                 nickName,
             });
-            setCommemt('');
+            setComment('');
+            getAllComments();
         } catch (e) {
             console.error("Error adding document: ", e);
         }
+    }
+
+    const getAllComments = async () => {
+        const querySnapshot = await getDocs(collection(fireStore, `posts/${postId}/comments`));
+        setAllComments(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
     }
 
     const onPushWithoutInput = () => {
@@ -48,15 +59,26 @@ export default function CommentsScreen({ route }) {
                     height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3,
                     marginBottom: 32,
                 }} />
+                <SafeAreaView style={styles.comments}>
+                    <FlatList
+                        data={allComments}
+                        renderItem={({ item }) =>
+                            <View style={styles.sectionComment}>
+                                <Text style={styles.commentText} >{item.comment}</Text>
+                                <View style={styles.nickNameContainer}>
+                                    <Text style={styles.nickNameText} >{item.nickName}</Text>
+                                </View>
+                            </View>}
+                        keyExtractor={item => item.id}
+                    />
+                </SafeAreaView>
 
                 <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
                     <View style={{ ...styles.form, paddingBottom: isShowKey ? 10 : 10 }}>
-
-
                         <View style={styles.commentsInnerButton}>
                             <TextInput
-                                value={commemt}
-                                onChangeText={(value) => setCommemt(value)}
+                                value={comment}
+                                onChangeText={setComment}
                                 placeholder="Комментировать..."
                                 style={styles.input}
                             />
@@ -77,6 +99,30 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         justifyContent: 'flex-end',
         backgroundColor: "#fff",
+    },
+    comments: {
+        flex: 1,
+    },
+    sectionComment: {
+        marginTop: 15,
+        padding: 10,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 10,
+    },
+    commentText: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 13,
+        lineHeight: 18,
+    },
+    nickNameContainer: {
+        flexDirection: "row",
+        justifyContent: 'flex-end',
+    },
+    nickNameText: {
+        fontFamily: 'Roboto-Regular',
+        fontSize: 10,
+        lineHeight: 12,
+        color: '#BDBDBD',
     },
 
     form: {

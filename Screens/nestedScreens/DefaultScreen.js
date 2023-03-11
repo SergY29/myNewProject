@@ -17,14 +17,13 @@ export default function DefaultScreen({ navigation }) {
     }
 
     useEffect(() => {
-        console.log('j,yjdkztvcz')
         getAllPosts();
 
     }, [])
 
-    if (posts) {
-        console.log('postScreen', posts)
-    }
+
+    console.log('postScreen', posts)
+
 
     return (
         <View style={styles.container}>
