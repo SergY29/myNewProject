@@ -4,7 +4,7 @@ import {
     View, Text, StyleSheet, TouchableOpacity, Image, TextInput, KeyboardAvoidingView,
     Platform, TouchableWithoutFeedback, Keyboard,
 } from "react-native";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 //icons
 import { AntDesign } from '@expo/vector-icons';
 

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Image, Button, Text } from "react-native";
+import { View, StyleSheet, FlatList, Image, Button, Text, TouchableOpacity } from "react-native";
 //firestore
 import { collection, getDocs } from "firebase/firestore";
+//icons
+import { Feather } from '@expo/vector-icons';
 
 import { fireStore } from '../../firebase/config';
 
@@ -30,17 +32,22 @@ export default function DefaultScreen({ navigation }) {
                 renderItem={({ item }) =>
                 (<View>
                     <Image sourse={{ uri: item.picture }} style={{
-                        height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32,
+                        height: 240, width: "100%", borderColor: '#fafa', borderWidth: 3, marginTop: 32, borderRadius: 10,
                     }} />
-                    <View>
-                        <Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.textAbouPhoto}>
                             {item.about}
                         </Text>
                     </View>
-                    <View>
-                        <Button title="Map" onPress={() => navigation.navigate('Map', { location: item.location })} />
-                        <Button title="Comments" onPress={() => navigation.navigate('Comments',
-                            { urlImage: item.picture, postId: item.id })} />
+                    <View style={styles.navPost}>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Comments',
+                            { urlImage: item.picture, postId: item.id })}>
+                            <Feather name="message-square" size={24} color="black" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Map', { location: item.location })}>
+                            <Feather name="map-pin" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
                 </View>)}
             />
@@ -53,8 +60,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 16,
-        // alignItems: "center",
-        // justifyContent: "center",
         backgroundColor: "#fff",
     },
+    textContainer: {
+        marginTop: 8,
+        marginBottom: 10,
+    },
+    textAbouPhoto: {
+        fontFamily: 'Roboto-Medium',
+        fontSize: 16,
+        lineHeight: 19,
+        color: '#212121',
+    },
+    navPost: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    }
 });
