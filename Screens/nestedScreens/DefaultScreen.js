@@ -39,7 +39,8 @@ export default function DefaultScreen({ navigation }) {
                     </View>
                     <View>
                         <Button title="Map" onPress={() => navigation.navigate('Map', { location: item.location })} />
-                        <Button title="Comments" onPress={() => navigation.navigate('Comments', { urlImage: item.picture })} />
+                        <Button title="Comments" onPress={() => navigation.navigate('Comments',
+                            { urlImage: item.picture, postId: item.id })} />
                     </View>
                 </View>)}
             />
