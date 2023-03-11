@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Image, Button, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, FlatList, Image, Text, TouchableOpacity } from "react-native";
 //firestore
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 //icons
